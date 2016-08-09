@@ -5,60 +5,52 @@ import java.util.HashMap;
 public class Shop {
 
   private final String name;
-  private int balance;
   private int salesTotal;
   private int refundsTotal;
   private HashMap<Item, Integer> inventory;
 
-  public Shop(String name, int balance){
+  public Shop(String name){
     this.name = name;
-    this.balance = balance;
     this.salesTotal = 0;
     this.refundsTotal = 0;
     this.inventory = new HashMap<Item, Integer>();
   }
 
-  public Shop(String name, int balance, HashMap<Item, Integer> inventory){
+  public Shop(String name, HashMap<Item, Integer> inventory){
     this.name = name;
-    this.balance = balance;
     this.salesTotal = 0;
     this.refundsTotal = 0;
     this.inventory = inventory;
+  }
+
+  public Shop(String name, int salesTotal, int refundsTotal){
+    this.name = name;
+    this.salesTotal = salesTotal;
+    this.refundsTotal = refundsTotal;
+    this.inventory = new HashMap<Item, Integer>();
   }
 
   public String getName(){
     return this.name;
   }
 
-  public int getBalance(){
-    return this.balance;
-  }
-
-  private void addFunds(int fundsIn){
-    this.balance += fundsIn;
-  }
-
-  private void subtractFunds(int fundsOut){
-    this.balance -= fundsOut;
-  }
-
-  private void setSalesTotal(int fundsIn){
-    this.salesTotal += fundsIn;
-  }
-
-  private int getSalesTotal(){
+  public int getSalesTotal(){
     return this.salesTotal;
   }
 
-  private void setRefundsTotal(int fundsOut){
-    this.refundsTotal += fundsOut;
-  }
-
-  private int getRefundsTotal(){
+  public int getRefundsTotal(){
     return this.refundsTotal;
   }
 
-  private int getBalanceOfSales(){
+  public void takeFunds(int fundsIn){
+    this.salesTotal += fundsIn;
+  }
+
+  public void makeRefund(int fundsOut){
+    this.refundsTotal += fundsOut;
+  }
+
+  public int getBalanceOfSales(){
     return this.salesTotal - this.refundsTotal;
   }
 

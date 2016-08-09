@@ -7,11 +7,13 @@ import java.util.HashMap;
 public class ShopTest {
 
   Shop snoutsRus;
+  Shop snoutsWorld;
   Item prizeSnouts;
 
   @Before
   public void before(){
-    snoutsRus= new Shop("Snouts R Us", 10000);
+    snoutsRus= new Shop("Snouts R Us");
+    snoutsWorld = new Shop("Snouts World", 100, 100);
     prizeSnouts = new Item("Prize Snouts", 699);
   }
 
@@ -21,8 +23,15 @@ public class ShopTest {
   }
 
   @Test
-  public void hasBalance(){
-    assertEquals(10000, snoutsRus.getBalance());
+  public void canAddToSalesTotal(){
+    snoutsWorld.takeFunds(500);
+    assertEquals(600, snoutsWorld.getSalesTotal());
+  }
+
+  @Test
+  public void canAddToRefundsTotal(){
+    snoutsWorld.makeRefund(200);
+    assertEquals(300, snoutsWorld.getRefundsTotal());
   }
 
   @Test
