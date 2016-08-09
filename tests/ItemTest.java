@@ -6,6 +6,7 @@ import org.junit.*;
 public class ItemTest {
 
   Item prizeSnouts;
+  Item substandardSnouts;
 
   @Before
   public void before(){
@@ -21,5 +22,11 @@ public class ItemTest {
   public void hasPrice(){
     assertEquals(699, prizeSnouts.getPrice());
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void priceMustBeZeroOrGreater(){
+    substandardSnouts = new Item("Substandard Snouts", -65);
+  }
+
 
 }
