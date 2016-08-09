@@ -9,15 +9,17 @@ public class CustomerTest {
   Customer customer;
   CreditCard creditCard;
   DebitCard debitCard;
-  ArrayList<Card> paymentMethods;
+  PaymentMethodList paymentMethods;
+  ArrayList<Card> emptyList;
 
   @Before
   public void before(){
     creditCard = new CreditCard("Snout Enabler Creditline", 1000, -100);
     debitCard = new DebitCard("Snout Bank Of America inc", 1000, 100);
-    paymentMethods = new ArrayList<Card>();
-    paymentMethods.add(creditCard);
-    paymentMethods.add(debitCard);
+    emptyList = new ArrayList<Card>();
+    paymentMethods = new PaymentMethodList(emptyList);
+    paymentMethods.addCard(creditCard);
+    paymentMethods.addCard(debitCard);
     customer = new Customer("Jimmy McSnoutsnout", paymentMethods);
   }
 
@@ -26,16 +28,52 @@ public class CustomerTest {
     assertEquals("Jimmy McSnoutsnout", customer.getName());
   }
 
+//mark getcard methods as private?
   @Test
-  public void hasCreditCard(){
-    ArrayList<Card> paymentMethods = customer.getPaymentMethods();
-    assertEquals(true, paymentMethods.contains(creditCard));
+  public void canSelectCreditCardWithGetCardMethod(){
+    CreditCard creditCard = (CreditCard) customer.getCard("Credit Card");
+    String cardName = creditCard.getName();
+    assertEquals("Snout Enabler Creditline", cardName);
   }
 
   @Test
-  public void hasDebitCard(){
-    ArrayList<Card> paymentMethods = customer.getPaymentMethods();
-    assertEquals(true, paymentMethods.contains(debitCard));
+  public void canSelectDebitCardWithGetCardMethod(){
+    DebitCard debitCard = (DebitCard) customer.getCard("Debit Card");
+    String cardName = debitCard.getName();
+    assertEquals("Snout Bank Of America inc", cardName);
   }
+
+  @Test
+  public void canSelectCreditCardWithGetCreditCardMethod(){
+    CreditCard creditCard = customer.getCreditCard();
+    String cardName = creditCard.getName();
+    assertEquals("Snout Enabler Creditline", cardName);
+  }
+
+  @Test
+  public void canSelectDebitCardWithGetDebitCardMethod(){
+    DebitCard debitCard = customer.getDebitCard();
+    String cardName = debitCard.getName();
+    assertEquals("Snout Bank Of America inc", cardName);
+  }
+
+  //if enough funds are available on the credit card, it should be used for any purchase
+
+  @Test
+  public void selectsCreditCardifPurchasePermitted(){
+    Card selectedCard = customer.selectPaymentMethod(800);
+    String cardName = selectedCard.getName();
+    assertEquals("Snout Enabler Creditline", cardName);
+  }
+
+  @Test
+  public void selectsDebitCardIfCantUseCreditCard(){
+    Card selectedCard = customer.selectPaymentMethod(1000);
+    String cardName = selectedCard.getName();
+    assertEquals("Snout Bank Of America inc", cardName);
+  }
+
+
+
 
 }
