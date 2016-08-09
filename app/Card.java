@@ -9,6 +9,11 @@ public abstract class Card implements Payable{
   private int balance;
   private int limit;
 
+  public Card(String name, int limit, int balance){
+    this.name = name;
+    this.limit = limit;
+    this.balance = balance;
+  }
 
   public String getName(){
     return this.name;
@@ -22,12 +27,12 @@ public abstract class Card implements Payable{
     return this.balance;
   }
 
-  public int getLimit(){
-    return this.limit;
+  public void setBalance(int newBalance){
+    this.balance = newBalance;
   }
 
-  public void setLimit(int lim){
-    this.limit = lim;
+  public int getLimit(){
+    return this.limit;
   }
 
   public int getAvailable(){
@@ -35,7 +40,21 @@ public abstract class Card implements Payable{
   }
 
   public void transferFunds(int amount){
-    this.balance -= amount;
+    int avail = this.getAvailable();
+    if (amount > avail) {
+      throw new IllegalArgumentException("Insufficient funds - wait til Giro day");
+    } else {
+      this.balance -= amount;
+    }
+  }
+
+  public boolean purchasePermitted(int price){
+    int avail = this.getAvailable();
+    if (price > avail){
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

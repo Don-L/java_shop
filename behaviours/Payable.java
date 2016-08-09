@@ -2,6 +2,6 @@ package behaviours;
 
 public interface Payable{
   int getAvailable();
-  void transferFunds();
-  void topUp();
+  void transferFunds(int amountOut);
+  void topUp(int amountIn);
 }
