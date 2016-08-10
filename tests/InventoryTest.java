@@ -55,4 +55,9 @@ public class InventoryTest {
     invent.take(prizeSnouts, 6);
   }
 
+  @Test
+  public void returnsStockQuantityOfItem(){
+    assertEquals(5, invent.getQuantity(prizeSnouts));
+  }
+
 }

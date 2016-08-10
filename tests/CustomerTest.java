@@ -7,6 +7,7 @@ import java.util.*;
 public class CustomerTest {
 
   Customer customer;
+  Customer cust;
   CreditCard creditCard;
   DebitCard debitCard;
   PaymentMethodList paymentMethods;
@@ -24,6 +25,11 @@ public class CustomerTest {
     paymentMethods.addCard(creditCard);
     paymentMethods.addCard(debitCard);
     customer = new Customer("Jimmy McSnoutsnout", paymentMethods);
+    list = new HashMap<Item, Integer>();
+    prizeSnouts = new Item("Prize Snouts", 699);
+    list.put(prizeSnouts, 3);
+    Inventory invent = new Inventory(list);
+    Customer cust = new Customer("Maggie McSnoutsnout", paymentMethods, invent);
   }
 
   @Test
@@ -78,15 +84,33 @@ public class CustomerTest {
 
   @Test
   public void canGetInventory(){
-    list = new HashMap<Item, Integer>();
-    prizeSnouts = new Item("Prize Snouts", 699);
-    list.put(prizeSnouts, 3);
-    Inventory invent = new Inventory(list);
-    Customer cust = new Customer("Maggie McSnoutsnout", paymentMethods, invent);
     Inventory returnedInvent = cust.getInventory();
     HashMap<Item, Integer> returnedList = returnedInvent.getList();
     int quantity = (int) returnedList.get(prizeSnouts);
     assertEquals(3, quantity);
+  }
+
+  @Test
+  public void canGetQuantityOfItemInStock(){
+    assertEquals(3, cust.getQuantity(prizeSnouts));
+  }
+
+  @Test
+  public void canAddItemsToStock(){
+    cust.addToInventory(prizeSnouts, 7);
+    Inventory returnedInvent = cust.getInventory();
+    HashMap<Item, Integer> returnedList = returnedInvent.getList();
+    int quantity = (int) returnedList.get(prizeSnouts);
+    assertEquals(10, quantity);
+  }
+
+  @Test
+  public void canTakeItemsFromStock(){
+    cust.takeFromInventory(prizeSnouts, 1);
+    Inventory returnedInvent = cust.getInventory();
+    HashMap<Item, Integer> returnedList = returnedInvent.getList();
+    int quantity = (int) returnedList.get(prizeSnouts);
+    assertEquals(2, quantity);
   }
 
 

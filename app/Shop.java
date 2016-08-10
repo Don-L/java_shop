@@ -58,4 +58,16 @@ public class Shop {
     return this.inventory;
   }
 
+  public int getQuantity(Item item){
+    return this.inventory.getQuantity(item);
+  }
+
+  public void addToInventory(Item item, Integer quantity){
+    this.inventory.add(item, quantity);
+  }
+
+  public void takeFromInventory(Item item, Integer quantity){
+    this.inventory.take(item, quantity);
+  }
+
 }

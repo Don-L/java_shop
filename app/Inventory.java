@@ -43,6 +43,10 @@ public class Inventory {
     }
   }
 
+  public int getQuantity(Item item){
+    return this.list.get(item);
+  }
+
 
 
 }
