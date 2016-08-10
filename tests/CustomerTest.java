@@ -83,6 +83,13 @@ public class CustomerTest {
   }
 
   @Test
+  public void selectsDebitCardIfRefundAmountOver2500(){
+    Card selectedCard = customer.selectRefundMethod(2600);
+    String cardName = selectedCard.getName();
+    assertEquals("Snout Bank Of America inc", cardName);
+  }
+
+  @Test
   public void canGetInventory(){
     Inventory returnedInvent = cust.getInventory();
     HashMap<Item, Integer> returnedList = returnedInvent.getList();

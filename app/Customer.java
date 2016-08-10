@@ -35,6 +35,17 @@ public class Customer {
     }
   }
 
+//debit card selected for refunds of over 2500
+  public Card selectRefundMethod(int refundAmount){
+    if (refundAmount < 2500){
+      Card creditCard = this.getCard("Credit Card");
+      return creditCard;
+    } else{
+      Card debitCard = this.getCard("Debit Card");
+      return debitCard;
+    }
+  }
+
 //make get card methods private?
   public CreditCard getCreditCard(){
     CreditCard creditCard = (CreditCard) this.getCard("Credit Card");

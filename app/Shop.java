@@ -70,4 +70,24 @@ public class Shop {
     this.inventory.take(item, quantity);
   }
 
+  public void transact(String transactionType, Customer customer, Item item, Integer quantity){
+    int itemPrice = item.getPrice();
+    int transactionValue = itemPrice * quantity;
+    if (transactionType == "sell"){
+      Card card = customer.selectPaymentMethod(transactionValue);
+      card.transferFunds(transactionValue);
+      this.takeFunds(transactionValue);
+      this.takeFromInventory(item, quantity);
+      customer.addToInventory(item, quantity);
+    } else {
+      if (transactionType == "refund"){
+        Card card = customer.selectRefundMethod(transactionValue);
+        this.makeRefund(transactionValue);
+        card.topUp(transactionValue);
+        customer.takeFromInventory(item, quantity);
+        this.addToInventory(item, quantity);
+      }
+    }
+  }
+
 }

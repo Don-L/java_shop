@@ -2,7 +2,7 @@ import app.*;
 
 import static org.junit.Assert.*;
 import org.junit.*;
-import java.util.HashMap;
+import java.util.*;
 
 public class ShopTest {
 
@@ -11,7 +11,9 @@ public class ShopTest {
   Shop internationalSnouts;
   Item prizeSnouts;
   HashMap<Item, Integer> list;
+  HashMap<Item, Integer> list2;
   Inventory invent;
+  Inventory invent2;
   Customer customer;
   CreditCard creditCard;
   DebitCard debitCard;
@@ -24,17 +26,20 @@ public class ShopTest {
     snoutsWorld = new Shop("Snouts World", 100, 100);
     prizeSnouts = new Item("Prize Snouts", 699);
     list = new HashMap<Item, Integer>();
+    list2 = new HashMap<Item, Integer>();
     list.put(prizeSnouts, 3);
+    list2.put(prizeSnouts, 3);
     invent = new Inventory(list);
+    invent2 = new Inventory(list2);
     internationalSnouts = new Shop("International Snouts", invent);
 
-    creditCard = new CreditCard("Snout Enabler Creditline", 1000, -100);
-    debitCard = new DebitCard("Snout Bank Of America inc", 1000, 100);
+    creditCard = new CreditCard("Snout Enabler Creditline", 100000, -10000);
+    debitCard = new DebitCard("Snout Bank Of America inc", 100000, 10000);
     emptyList = new ArrayList<Card>();
     paymentMethods = new PaymentMethodList(emptyList);
     paymentMethods.addCard(creditCard);
     paymentMethods.addCard(debitCard);
-    customer = new Customer("Jimmy McSnoutsnout", paymentMethods, invent);
+    customer = new Customer("Jimmy McSnoutsnout", paymentMethods, invent2);
   }
 
   @Test
@@ -93,8 +98,27 @@ public class ShopTest {
   @Test
   public void saleReducesShopStockLevel(){
     internationalSnouts.transact("sell", customer, prizeSnouts, 1);
-    int quantity = internationalSnouts.getQuantity(prizeSnouts);
+    int quantity = (int) internationalSnouts.getQuantity(prizeSnouts);
     assertEquals(2, quantity);
+  }
+
+  @Test
+  public void refundIncreasesShopStockLevel(){
+    internationalSnouts.transact("refund", customer, prizeSnouts, 1);
+    int quantity = internationalSnouts.getQuantity(prizeSnouts);
+    assertEquals(4, quantity);
+  }
+
+  @Test
+  public void saleIncreasesShopSalesTotal(){
+    internationalSnouts.transact("sell", customer, prizeSnouts, 1);
+    assertEquals(699, internationalSnouts.getSalesTotal());
+  }
+
+  @Test
+  public void refundIncreasesShopRefundsTotal(){
+    internationalSnouts.transact("refund", customer, prizeSnouts, 1);
+    assertEquals(699, internationalSnouts.getRefundsTotal());
   }
 
 }

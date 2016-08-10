@@ -16,12 +16,23 @@ public class CreditCard extends Card{
     } else {
       int currentBalance = this.getBalance();
       int newBalance = currentBalance + amount;
-      if (newBalance >0){
+      if (newBalance > 0){
         throw new IllegalArgumentException("You cannot have a positive balance on a credit card");
       } else {
         this.setBalance(newBalance);
       }
     }
   }
+
+// how to get this to work?
+//   public boolean topUpPermitted(int amount){
+//     int currentBalance = this.getBalance();
+//     int newBalance = currentBalance + amount;
+//     if (newBalance > 0){
+//       return false;
+//     } else{
+//       return true;
+//     }
+//   }
 
 }

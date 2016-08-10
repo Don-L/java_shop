@@ -6,6 +6,7 @@ import org.junit.*;
 public class CreditCardTest {
 
   Card card;
+  Card card2;
 
   @Before
   public void before(){
@@ -63,5 +64,11 @@ public class CreditCardTest {
   public void testPermissiblePurchase(){
     assertEquals(true, card.purchasePermitted(100));
   }
+
+// cant get this to work - java looking for method on superclass
+//   @Test
+//   public void testPermissibleRefund(){
+//     assertEquals(false, card.topUpPermitted(101));
+//   }
 
 }
