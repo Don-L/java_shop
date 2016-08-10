@@ -29,7 +29,7 @@ public class CustomerTest {
     prizeSnouts = new Item("Prize Snouts", 699);
     list.put(prizeSnouts, 3);
     Inventory invent = new Inventory(list);
-    Customer cust = new Customer("Maggie McSnoutsnout", paymentMethods, invent);
+    cust = new Customer("Maggie McSnoutsnout", paymentMethods, invent);
   }
 
   @Test
@@ -112,7 +112,6 @@ public class CustomerTest {
     int quantity = (int) returnedList.get(prizeSnouts);
     assertEquals(2, quantity);
   }
-
 
 
 

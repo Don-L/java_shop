@@ -77,4 +77,9 @@ public class ShopTest {
     assertEquals(2, quantity);
   }
 
+  // @Test
+  // public void saleReducesShopStockLevel(){
+  //   internationalSnouts.transact
+  // }
+
 }
