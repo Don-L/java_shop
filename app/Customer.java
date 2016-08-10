@@ -5,10 +5,18 @@ public class Customer {
 
   private final String name;
   private PaymentMethodList paymentMethodList;
+  private Inventory inventory;
 
   public Customer(String name, PaymentMethodList paymentMethodList){
     this.name = name;
     this.paymentMethodList = paymentMethodList;
+    this.inventory = new Inventory();
+  }
+
+  public Customer(String name, PaymentMethodList paymentMethodList, Inventory inventory){
+    this.name = name;
+    this.paymentMethodList = paymentMethodList;
+    this.inventory = inventory;
   }
 
   public String getName(){
@@ -25,9 +33,7 @@ public class Customer {
     }
   }
 
-
-
-//make get card methods as private?
+//make get card methods private?
   public CreditCard getCreditCard(){
     CreditCard creditCard = (CreditCard) this.getCard("Credit Card");
     return creditCard;
@@ -40,6 +46,10 @@ public class Customer {
 
   public Card getCard(String cardType){
     return this.paymentMethodList.getCard(cardType);
+  }
+
+  public Inventory getInventory(){
+    return this.inventory;
   }
 
 }

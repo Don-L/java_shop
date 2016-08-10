@@ -11,6 +11,9 @@ public class CustomerTest {
   DebitCard debitCard;
   PaymentMethodList paymentMethods;
   ArrayList<Card> emptyList;
+  HashMap<Item, Integer> list;
+  Item prizeSnouts;
+  Inventory inventory;
 
   @Before
   public void before(){
@@ -71,6 +74,19 @@ public class CustomerTest {
     Card selectedCard = customer.selectPaymentMethod(1000);
     String cardName = selectedCard.getName();
     assertEquals("Snout Bank Of America inc", cardName);
+  }
+
+  @Test
+  public void canGetInventory(){
+    list = new HashMap<Item, Integer>();
+    prizeSnouts = new Item("Prize Snouts", 699);
+    list.put(prizeSnouts, 3);
+    Inventory invent = new Inventory(list);
+    Customer cust = new Customer("Maggie McSnoutsnout", paymentMethods, invent);
+    Inventory returnedInvent = cust.getInventory();
+    HashMap<Item, Integer> returnedList = returnedInvent.getList();
+    int quantity = (int) returnedList.get(prizeSnouts);
+    assertEquals(3, quantity);
   }
 
 
