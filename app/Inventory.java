@@ -15,6 +15,7 @@ public class Inventory {
     this.list = list;
   }
 
+//change tests to they use the bespoke customer/shop inventory methods, then remove this method
   public HashMap<Item, Integer> getList(){
     return this.list;
   }

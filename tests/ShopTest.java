@@ -121,4 +121,20 @@ public class ShopTest {
     assertEquals(699, internationalSnouts.getRefundsTotal());
   }
 
+  @Test
+  public void saleDecreasesAvailableFundsOnCustomerCard(){
+    internationalSnouts.transact("sell", customer, prizeSnouts, 1);
+    Card card = customer.getCreditCard();
+    int postPurchaseAvailable = card.getAvailable();
+    assertEquals(89301, postPurchaseAvailable);
+  }
+
+  @Test
+  public void refundIncreasesAvailableFundsOnCustomerCard(){
+    internationalSnouts.transact("refund", customer, prizeSnouts, 1);
+    Card card = customer.getCreditCard();
+    int postRefundAvailable = card.getAvailable();
+    assertEquals(90699, postRefundAvailable);
+  }
+
 }
