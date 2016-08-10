@@ -12,6 +12,11 @@ public class ShopTest {
   Item prizeSnouts;
   HashMap<Item, Integer> list;
   Inventory invent;
+  Customer customer;
+  CreditCard creditCard;
+  DebitCard debitCard;
+  PaymentMethodList paymentMethods;
+  ArrayList<Card> emptyList;
 
   @Before
   public void before(){
@@ -22,6 +27,14 @@ public class ShopTest {
     list.put(prizeSnouts, 3);
     invent = new Inventory(list);
     internationalSnouts = new Shop("International Snouts", invent);
+
+    creditCard = new CreditCard("Snout Enabler Creditline", 1000, -100);
+    debitCard = new DebitCard("Snout Bank Of America inc", 1000, 100);
+    emptyList = new ArrayList<Card>();
+    paymentMethods = new PaymentMethodList(emptyList);
+    paymentMethods.addCard(creditCard);
+    paymentMethods.addCard(debitCard);
+    customer = new Customer("Jimmy McSnoutsnout", paymentMethods, invent);
   }
 
   @Test
@@ -77,9 +90,11 @@ public class ShopTest {
     assertEquals(2, quantity);
   }
 
-  // @Test
-  // public void saleReducesShopStockLevel(){
-  //   internationalSnouts.transact
-  // }
+  @Test
+  public void saleReducesShopStockLevel(){
+    internationalSnouts.transact("sell", customer, prizeSnouts, 1);
+    int quantity = internationalSnouts.getQuantity(prizeSnouts);
+    assertEquals(2, quantity);
+  }
 
 }
